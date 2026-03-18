@@ -1,0 +1,12 @@
+{
+  "name": "agents-unlocked",
+  "version": "1.0.0",
+  "description": "India's first agent-native virtual mixer — by Sorin Investments",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
