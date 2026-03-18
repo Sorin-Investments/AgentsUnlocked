@@ -1,34 +1,27 @@
 {
   "rewrites": [
-    { "source": "/api/spots",                           "destination": "/api/spots.js" },
-    { "source": "/api/register",                        "destination": "/api/register.js" },
-    { "source": "/api/briefing/:code",                  "destination": "/api/briefing/[code].js" },
-    { "source": "/api/handshake",                       "destination": "/api/handshake.js" },
-    { "source": "/api/room/:id/agenda-vote",            "destination": "/api/room/agenda-vote.js" },
-    { "source": "/api/chat/agent",                      "destination": "/api/chat/agent.js" },
-    { "source": "/api/chat/agent/live",                 "destination": "/api/chat/live.js" },
-    { "source": "/api/qa",                              "destination": "/api/qa/index.js" },
-    { "source": "/api/qa/top",                          "destination": "/api/qa/index.js" },
-    { "source": "/api/meeting-request",                 "destination": "/api/meeting-request.js" },
-    { "source": "/api/debrief",                         "destination": "/api/debrief.js" },
-    { "source": "/api/graph",                           "destination": "/api/graph.js" },
-    { "source": "/register.md",                         "destination": "/register.md" },
-    { "source": "/",                                    "destination": "/public/index.html" }
+    { "source": "/api/spots", "destination": "/spots.js" },
+    { "source": "/api/register", "destination": "/register.js" },
+    { "source": "/api/briefing/:code", "destination": "/[code].js" },
+    { "source": "/api/handshake", "destination": "/handshake.js" },
+    { "source": "/api/room/:id/agenda-vote", "destination": "/agenda-vote.js" },
+    { "source": "/api/chat/agent", "destination": "/agent.js" },
+    { "source": "/api/chat/agent/live", "destination": "/live.js" },
+    { "source": "/api/qa", "destination": "/index.js" },
+    { "source": "/api/qa/top", "destination": "/index.js" },
+    { "source": "/api/meeting-request", "destination": "/meeting-request.js" },
+    { "source": "/api/meeting-request/accept", "destination": "/accept.js" },
+    { "source": "/api/debrief", "destination": "/debrief.js" },
+    { "source": "/api/graph", "destination": "/graph.js" },
+    { "source": "/register.md", "destination": "/register.md" }
   ],
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
-      ]
-    },
-    {
-      "source": "/register.md",
-      "headers": [
-        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
     }
   ]
