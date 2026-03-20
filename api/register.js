@@ -12,12 +12,12 @@ export default async function handler(req) {
   try {
     body = await req.json();
   } catch {
-    return error('Invalid JSON body. Your agent should POST a JSON object per register.md spec.');
+    return error('Invalid JSON body.');
   }
 
   const missing = REQUIRED.filter(f => !body[f]);
   if (missing.length) {
-    return error(`Missing required fields: ${missing.join(', ')}. See register.md for the full schema.`);
+    return error('Missing required fields: ' + missing.join(', '));
   }
 
   const valid = await validateAgentToken(body.human_name, body.agent_model, body.agent_token);
@@ -25,8 +25,8 @@ export default async function handler(req) {
 
   const buildingWords = body.building.trim().split(/\s+/).length;
   const challengeWords = body.challenge.trim().split(/\s+/).length;
-  if (buildingWords > 50) return error('"building" must be 50 words or fewer.');
-  if (challengeWords > 50) return error('"challenge" must be 50 words or fewer.');
+  if (buildingWords > 50) return error('building must be 50 words or fewer.');
+  if (challengeWords > 50) return error('challenge must be 50 words or fewer.');
 
   const { data: spots } = await supabase.from('spots_remaining').select('*').single();
   const isFull = spots?.spots_left <= 0 || !spots?.registration_open;
@@ -42,8 +42,7 @@ export default async function handler(req) {
     return json({
       message: 'Your human is already registered.',
       confirmation_code: existing.confirmation_code,
-      status: existing.status,
-      next: `Fetch your briefing at /api/briefing/${existing.confirmation_code}`
+      status: existing.status
     });
   }
 
@@ -74,11 +73,10 @@ export default async function handler(req) {
     agent_model: reg.agent_model,
     event_id: EVENT_ID,
     message: isWaitlist
-      ? `Added to waitlist. Your agent will be notified if a spot opens.`
-      : `Registration confirmed. Welcome to Agents Unlocked. ${spots.spots_left - 1} spots remaining.`,
+      ? 'Added to waitlist.'
+      : 'Registration confirmed. Welcome to Agents Unlocked.',
     next_step: isWaitlist
-      ? 'Monitor /api/spots. If spots_remaining > 0, re-register.'
-      : `Fetch your briefing 48 hours before the event: GET /api/briefing/${reg.confirmation_code}`,
-    brief_your_human: {
-      event: 'Agents Unlocked by Sorin Investments',
-      for
+      ? 'Monitor /api/spots.'
+      : 'Fetch your briefing 48 hours before: GET /api/briefing/' + reg.confirmation_code
+  }, isWaitlist ? 202 : 201);
+}
